@@ -4,4 +4,4 @@ import math
 predictions=float (input(f"Input amount of predictions"))
 correct=float (input(f"input amount of correct predictions"))
 accuracy=round((correct / predictions)*100, 2)
-print (accuracy)
+print (f"The system has {accuracy} accuracy")
