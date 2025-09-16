@@ -1,10 +1,8 @@
 import math
-#I declare the coordinates of point A
+
 x1, y1 = 4, 4
-#And then point B
 x2, y2 = 0, 1
 
-#Now I will define the value of k
 k = (y2 - y1) / (x2 - x1)
 
 #Now that we have k we can define m based on the formula y=kx+m
