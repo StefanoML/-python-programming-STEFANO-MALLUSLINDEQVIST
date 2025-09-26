@@ -14,6 +14,8 @@ tloops = 10 #How many times the test loop will run
 #I decided to divide the functions in different sections based on functionality
 
 #******************************   DATA CLEANING  ********************************
+
+#This function will strip each line removing all whitespaces and separating values at the comma, then assigning them
 def clean_line(line):
     try:
         stripped = [item.strip() for item in line.split(',')]
@@ -27,7 +29,7 @@ def clean_line(line):
         print(f"Skipping line {line.strip()}. Error{e}.")
         return None
 
-
+# I created the same process for the testpoints file, in case we want to add all test points directly there
 def clean_testpoints(line):
 
     stripped = line.strip()
@@ -41,7 +43,7 @@ def clean_testpoints(line):
     except(ValueError,IndexError):
         return None 
     
-
+#Function to make lists with all points of the same label
 def split_data(all_points):
     #We first divide the data in two lists by using the label
     pichu_all = [p for p in all_points if p[2]==0]
@@ -66,24 +68,28 @@ def split_data(all_points):
 #*************************************** CALCULATIONS *************************************
 
 
-def euclidean_distance(p1,p2): #This will be used for the nearest neighbour algorithm
+def euclidean_distance(p1,p2): #The euclidean distance will be used for the nearest neighbour function
     dist_x = p2[0] - p1[0]
     dist_y = p2[1] - p1[1]
     distance = math.sqrt(dist_x**2 + dist_y**2)
     return distance
 
-
+#Nearest neighbor calculation
 def k_nene(training_set, test_point):
-    dist_labels = []
+    dist_labels = [] #list of labels for distances of NN
 
     for width,height, label in training_set:
         point = (width,height)
         distance = euclidean_distance(point,test_point)
         dist_labels.append((distance,label))
     
+    #We sort the distances to get the smallest ones on top and add the top k ones to the list
     dist_labels.sort()
     nearest = dist_labels[:k]
     
+    #Here we add all the labels in the NN list.
+    #Being the values 0 and 1, the total will be the number of Pikachus
+    #I'm aware that this would not work if we had more labels and we would need to add each NN to its own variable.
     counter = sum(neighbor[1] for neighbor in nearest)
 
     if counter > (k-counter):
@@ -93,7 +99,7 @@ def k_nene(training_set, test_point):
 
 #*****************************************  OUTPUT ***********************************
 
-
+#Function to print the plots
 def plot(all_points, test_points=None):
     pichu_x = []
     pichu_y = []
@@ -126,29 +132,23 @@ def plot(all_points, test_points=None):
     plt.grid(True)
     plt.show()
 
-
+#Function to calculate predictions based on NN
 def prediction(training_data, points):
         predlist=[]
         for point in points:
-            #I can't take credit for this next block of code, it was suggested by AI assistant 
-            # to solve the issue with different inputs with or without label
+            #I can't take credit for this next block of code, it was suggested by an AI assistant 
+            # to solve the issue with different inputs formats with or without label
             coords = point  
             if isinstance(point, tuple) and len(point) == 3:
                 coords = (point[0], point[1])
 
             pred = k_nene(training_data, coords)
             predlist.append(pred)
-
-            if pred == 1: prediction_label = "Pikachu"
-            elif pred == 0: prediction_label = "Pichu"
-            else: prediction_label = "Error"
-
-            #print (f"The test point {coords} is classified as: {prediction_label}.")
         
         return predlist
 
 
-
+#Function to calculate the accuracy of datasets
 def accuracy(predictions, true_labels):
     correct = 0
     total = len(predictions)
