@@ -196,8 +196,8 @@ if choice == "1":
 
     plot(all_points, test_points)
     predictions = prediction(all_points, test_points)
-    pr_label = "Pichu" if predictions == 0 else "Pikachu"
-    print(f"Prediction for point{test_points}: {pr_label}!")
+    pr_label = "Pichu" if predictions[0] == 0 else "Pikachu"
+    print(f"Prediction for point{test_points[0]}: {pr_label}!")
 
 
 elif choice == "2":
@@ -238,3 +238,5 @@ elif choice == "4":
     print(f"Average accuracy after {tloops} runs: {avg_accuracy:.2f}%")
 
 else: print("Invalid choice, please select an option between 1 and 4!")
+
+
