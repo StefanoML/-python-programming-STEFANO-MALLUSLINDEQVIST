@@ -1,0 +1,28 @@
+Group 1:
+- Quentin Pink 27
+- Diana Green 27
+- Ian Orange 33
+- Mike Bronze 34
+- Laura Gold 23
+
+Group 2:
+- Mary Jones 30
+- Bob Brown 28
+- Oliver Indigo 36
+- John Smith 25
+- Fiona Red 24
+
+Group 3:
+- George Yellow 29
+- Rachel Cyan 30
+- Julia Gray 21
+- Hannah Purple 26
+- Nina Copper 20
+
+Group 4:
+- Kevin Silver 32
+- Charlie Black 35
+- Alice White 22
+- Paula Violet 22
+- Evan Blue 31
+
