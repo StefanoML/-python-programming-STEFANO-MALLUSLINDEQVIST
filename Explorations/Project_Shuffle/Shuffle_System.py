@@ -2,9 +2,12 @@ import math
 import random as rnd
 import os
 
+####################################---PATHS---#################################
 
 file_dirin = os.path.join(os.path.dirname(__file__), "input")
 file_dirout = os.path.join(os.path.dirname(__file__), "output")
+
+###################################---FILES---##################################
 
 filein = input("Please Enter the name of the file you want to shuffle:")
 if not filein.endswith(".txt"):
@@ -17,6 +20,8 @@ if not fileout.endswith(".txt"):
 filepath_in = os.path.join(file_dirin,filein)
 filepath_out = os.path.join(file_dirout,fileout)
 
+##################################---FUNCTIONS---###############################
+
 def read_file(file):
     try:
         with open (file, "r", encoding="utf-8")as f:
@@ -24,8 +29,11 @@ def read_file(file):
     except FileNotFoundError:
         print("Specified file not found, please check that the file is in the 'input' directory")
         return
-    
+
+#################################---MAIN---#####################################
+
 def main():
+    #Menu with choices
     print("Would you like to:")
     print("1: Decide the number of groups to create;")
     print("2: Decide the amount of elements in each group.")
@@ -38,7 +46,7 @@ def main():
     
     items = read_file(filepath_in)
 
-    #We check whether the file doesn't exist, or does not contain any data
+    #We check in case the file doesn't exist, or does not contain any data
     if items is None: 
         return
     if not items:
@@ -46,6 +54,8 @@ def main():
         return
 
 #Now we can finally go on with the script's functionalities
+    
+    #The first choice lets us choose how many groups we want to create
     if choice == 1:
         try:
             groups = int(input("How many groups would you like to create?"))
@@ -54,16 +64,16 @@ def main():
             print("Please enter a number.")
             return
         
-        rnd.shuffle(items)
+        rnd.shuffle(items) #Shuffles the objects in the list
         groups_list = []
         group_size = math.ceil(len(items)/groups) #Calculates the size of groups
 
-        for i in range(0,len(items), group_size):
+        for i in range(0,len(items), group_size): #Adds the shuffled items in the new list
             groups_list.append(items[i:i + group_size])
 
         os.makedirs(file_dirout, exist_ok=True) #Checks that the directory exists
 
-        with open(filepath_out, "w", encoding="utf-8") as f:
+        with open(filepath_out, "w", encoding="utf-8") as f: #And finally writes the output document
             for idx, group in enumerate(groups_list, start=1):
                 f.write(f"Group {idx}:\n")
                 for item in group:
@@ -73,6 +83,7 @@ def main():
         print(f"{len(groups_list)} groups have been created and saved to {filepath_out}!")
 
 
+#The second choice lets us choose how many objects we want in each group
 
     elif choice == 2:
         try:
@@ -99,9 +110,7 @@ def main():
         print(f"{len(groups_list)} groups have been created and saved to {filepath_out}!")
 
 
-
-
-
+#The last choice gives a shuffled version of the original list
     elif choice == 3:
         rnd.shuffle(items)
 
@@ -110,6 +119,7 @@ def main():
             for item in items:
                 f.write(item + "\n")
         print("A shuffled file has now been created.")
+
     else: 
         print("Please enter a valid choice.")
 
